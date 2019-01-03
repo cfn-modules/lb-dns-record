@@ -1,0 +1,32 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'cfn-modules test'
+Resources:
+  Vpc:
+    Type: 'AWS::CloudFormation::Stack'
+    Properties:
+      Parameters:
+        S3Endpoint: 'false' # speed up the test
+        DynamoDBEndpoint: 'false' # speed up the test
+        FlowLog: 'false' # speed up the test
+        NatGateways: 'false' # speed up the test
+      TemplateURL: './node_modules/@cfn-modules/vpc/module.yml'
+  Alb:
+    Type: 'AWS::CloudFormation::Stack'
+    Properties:
+      Parameters:
+        VpcModule: !GetAtt 'Vpc.Outputs.StackName'
+      TemplateURL: './node_modules/@cfn-modules/alb/module.yml'
+  HostedZone:
+    Type: 'AWS::CloudFormation::Stack'
+    Properties:
+      Parameters:
+        Name: 'widdix.de'
+      TemplateURL: './node_modules/@cfn-modules/route53-hosted-zone-public/module.yml'
+  Record:
+    Type: 'AWS::CloudFormation::Stack'
+    Properties:
+      Parameters:
+        HostedZoneModule: !GetAtt 'HostedZone.Outputs.StackName'
+        LoadBalancerModule: !GetAtt 'Alb.Outputs.StackName'
+      TemplateURL: './node_modules/@cfn-modules/lb-dns-record/module.yml'

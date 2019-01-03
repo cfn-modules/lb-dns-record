@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "dependencies": {
+    "eslint": "5.6.0",
+    "ava": "0.25.0",
+    "@cfn-modules/test": "0.3.0",
+    "@cfn-modules/vpc": "1.1.0",
+    "@cfn-modules/route53-hosted-zone-public": "1.0.0",
+    "@cfn-modules/lb-dns-record": "file:../"
+  },
+  "scripts": {
+    "test": "eslint . && ava -c 4 *.js"
+  }
+}
