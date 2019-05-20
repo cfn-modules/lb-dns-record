@@ -30,6 +30,15 @@ Resources:
       TemplateURL: './node_modules/@cfn-modules/lb-dns-record/module.yml'
 ```
 
+## Examples
+
+none
+
+## Related modules
+
+* [alb](https://github.com/cfn-modules/alb)
+* [nlb](https://github.com/cfn-modules/nlb)
+
 ## Parameters
 
 <table>
