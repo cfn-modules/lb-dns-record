@@ -1,11 +1,11 @@
 {
   "private": true,
   "dependencies": {
-    "eslint": "5.16.0",
-    "ava": "1.4.1",
+    "eslint": "6.2.2",
+    "ava": "2.3.0",
     "@cfn-modules/test": "0.5.1",
     "@cfn-modules/vpc": "1.1.1",
-    "@cfn-modules/alb": "1.0.3",
+    "@cfn-modules/alb": "1.0.4",
     "@cfn-modules/route53-hosted-zone-public": "1.0.0",
     "@cfn-modules/lb-dns-record": "file:../"
   },
