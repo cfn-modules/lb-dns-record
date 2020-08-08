@@ -1,6 +1,3 @@
-[![Build Status](https://travis-ci.org/cfn-modules/lb-dns-record.svg?branch=master)](https://travis-ci.org/cfn-modules/lb-dns-record)
-[![NPM version](https://img.shields.io/npm/v/@cfn-modules/lb-dns-record.svg)](https://www.npmjs.com/package/@cfn-modules/lb-dns-record)
-
 # cfn-modules: Application/Network load balancer DNS record
 
 Application/Network load balancer DNS record.
