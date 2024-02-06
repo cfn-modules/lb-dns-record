@@ -26,6 +26,15 @@ Parameters:
     Description: 'Name that is used to create the DNS entry with trailing dot, e.g. §{SubDomainNameWithDot}§{HostedZoneName}. Leave blank for naked (or apex and bare) domain.'
     Type: String
     Default: ''
+  LoadBalancerIpAddressType:
+    Description: 'The IP adress type of the load balancer: IPv4 only or Dualstack (IPv4+IPv6)'
+    Type: String
+    Default: 'dualstack'
+    AllowedValues:
+    - 'ipv4'
+    - 'dualstack'
+Conditions:
+  HasIpv6: !Equals [!Ref LoadBalancerIpAddressType, 'dualstack']
 Resources:
   RecordSet:
     Type: 'AWS::Route53::RecordSet'
@@ -39,6 +48,19 @@ Resources:
       - SubDomainNameWithDot: !Ref SubDomainNameWithDot
         HostedZoneName: {'Fn::ImportValue': !Sub '${HostedZoneModule}-Name'}
       Type: A
+  RecordSetAAA:
+    Condition: HasIpv6
+    Type: 'AWS::Route53::RecordSet'
+    Properties:
+      AliasTarget:
+        HostedZoneId: {'Fn::ImportValue': !Sub '${LoadBalancerModule}-CanonicalHostedZoneId'}
+        DNSName: {'Fn::ImportValue': !Sub '${LoadBalancerModule}-DnsName'}
+      HostedZoneId: {'Fn::ImportValue': !Sub '${HostedZoneModule}-Id'}
+      Name: !Sub
+      - '${SubDomainNameWithDot}${HostedZoneName}'
+      - SubDomainNameWithDot: !Ref SubDomainNameWithDot
+        HostedZoneName: {'Fn::ImportValue': !Sub '${HostedZoneModule}-Name'}
+      Type: AAAA
 Outputs:
   ModuleId:
     Value: 'lb-dns-record'
